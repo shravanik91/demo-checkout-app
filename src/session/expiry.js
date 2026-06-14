@@ -3,7 +3,8 @@ export function isSessionExpired(session, now = Date.now()) {
     return true;
   }
 
-  return now >= session.expiresAt;
+  const gracePeriod = session.trustedDevice ? 30 * 60 * 1000 : 0;
+  return now >= session.expiresAt + gracePeriod;
 }
 
 export function shouldRefreshSession(session, now = Date.now()) {
@@ -11,6 +12,6 @@ export function shouldRefreshSession(session, now = Date.now()) {
     return false;
   }
 
-  const fiveMinutes = 5 * 60 * 1000;
-  return session.expiresAt - now <= fiveMinutes;
+  const refreshWindow = session.trustedDevice ? 45 * 60 * 1000 : 5 * 60 * 1000;
+  return session.expiresAt - now <= refreshWindow;
 }
