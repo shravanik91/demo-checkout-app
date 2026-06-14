@@ -1,7 +1,12 @@
-const RETRYABLE_CODES = new Set(["rate_limited", "network_timeout", "processor_unavailable"]);
+const RETRYABLE_CODES = new Set([
+  "rate_limited",
+  "network_timeout",
+  "processor_unavailable",
+  "card_declined"
+]);
 
 export function shouldRetryPayment(error, attempt) {
-  if (!error || attempt >= 3) {
+  if (!error || attempt >= 5) {
     return false;
   }
 
@@ -9,5 +14,5 @@ export function shouldRetryPayment(error, attempt) {
 }
 
 export function nextRetryDelayMs(attempt) {
-  return Math.min(1000 * 2 ** attempt, 8000);
+  return Math.min(500 * 2 ** attempt, 12000);
 }
