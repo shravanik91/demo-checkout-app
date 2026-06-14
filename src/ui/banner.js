@@ -1,3 +1,3 @@
 export function checkoutBanner() {
-  return "Secure checkout";
+  return "Secure checkout with encrypted payments";
 }
