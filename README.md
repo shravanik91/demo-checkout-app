@@ -35,3 +35,28 @@ It intentionally does not add tests for:
 - idempotency
 
 That makes it a strong demo for a `Do not merge` recommendation.
+
+## Push To GitHub
+
+Create an empty GitHub repository named `demo-checkout-app`, then run:
+
+```bash
+git remote add origin https://github.com/YOUR_USERNAME/demo-checkout-app.git
+git push -u origin main
+git push -u origin demo/low-risk-ui-copy
+git push -u origin demo/high-risk-auth-payment
+```
+
+Then open these PRs on GitHub:
+
+- `demo/low-risk-ui-copy` into `main`
+- `demo/high-risk-auth-payment` into `main`
+
+Use the high-risk PR URL in AI Release Risk Analyzer with this test output:
+
+```text
+FAIL tests/payments.test.js
+Payment retry policy tests failed.
+Session tests passed, but no trusted-device grace-period test was added.
+No refund, webhook retry, or idempotency tests were run.
+```
